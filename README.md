@@ -1,5 +1,5 @@
-# CS561_Assignemnt2_MockServer
-Assignment 2 for CS561 (Software Engineering Methods)
+#CS _561_Weather_Backend
+(Software Engineering Methods)
 
 
 Mocked the OpenWeather API using API mocker for the assignemnt 2.
