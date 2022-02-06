@@ -1,144 +1,166 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
-  description: "This swagger doc is for CS 561 weather API"
-  version: "1.0.0"
-  title: "CS 561 Assignment 4"
-host: "localhost:3000"
-basePath: "/v1"
+  description: This swagger doc is for CS 561 weather API
+  version: 1.0.0
+  title: CS 561 Assignment 4
 tags:
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
-schemes:
-- "http"
+  - name: user
+    description: Operations about user
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
 paths:
   /auth:
     post:
       tags:
-      - "user"
-      summary: "Authenticate user and return token"
-      consumes:
-        - application/json
+        - user
+      summary: Authenticate user and return token
       description: ""
-      operationId: "loginUser"
-      produces:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "The user to login"
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        description: The user to login
         required: true
-        schema:
-          $ref: "#/definitions/User"
       responses:
         "200":
-          description: "successful operation"
-          examples:
+          description: successful operation
+          content:
             application/json:
-              token: a_very_secret_token_for_string
-            
+              examples:
+                response:
+                  value:
+                    token: a_very_secret_token_for_string
   /weather:
     get:
       tags:
-      - "user"
-      summary: "Returns current temperature"
+        - user
+      summary: Returns current temperature
       description: ""
-      operationId: "getWeather"
-      produces:
-      - "application/json"
+      operationId: getWeather
+      security:
+        - bearerAuth: []
       parameters:
-      - name: "q"
-        in: "query"
-        description: "City name, state code and country code divided by comma, Please, refer to ISO 3166 for the state codes or country codes. You can specify the parameter not only in English. In this case, the API response should be returned in the same language as the language of requested location name if the location is in our predefined list of more than 200,000 locations."
-        required: true
-        type: "string"
-      - name: "appid"
-        in: "query"
-        description: "Your unique API key"
-        required: true
-        type: "string"
-      - name: "mode"
-        in: "query"
-        description: "Response format. Possible values are xml and html. If you don't use the mode parameter format is JSON by default."
-        required: false
-        type: "string"
-      - name: "units"
-        in: "query"
-        description: "Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default."
-        required: false
-        type: "string"
-      - name: "lang"
-        in: "query"
-        description: "You can use this parameter to get the output in your language."
-        required: false
-        type: "string"
+        - name: q
+          in: query
+          description: City name, state code and country code divided by comma, Please,
+            refer to ISO 3166 for the state codes or country codes. You can
+            specify the parameter not only in English. In this case, the API
+            response should be returned in the same language as the language of
+            requested location name if the location is in our predefined list of
+            more than 200,000 locations.
+          required: true
+          schema:
+            type: string
+        - name: appid
+          in: query
+          description: Your unique API key
+          required: true
+          schema:
+            type: string
+        - name: mode
+          in: query
+          description: Response format. Possible values are xml and html. If you don't use
+            the mode parameter format is JSON by default.
+          required: false
+          schema:
+            type: string
+        - name: units
+          in: query
+          description: Units of measurement. standard, metric and imperial units are
+            available. If you do not use the units parameter, standard units
+            will be applied by default.
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: You can use this parameter to get the output in your language.
+          required: false
+          schema:
+            type: string
       responses:
         "200":
-          description: "successful operation"
-          examples:
+          description: successful operation
+          content:
             application/json:
-              coord:
-                lon: -123.262
-                lat: 44.5646
-              weather:
-                - id: 804
-                  main: Clouds
-                  description: overcast clouds
-                  icon: 04n
-              base: stations
-              main:
-                temp: 276.68
-                feels_like: 276.68
-                temp_min: 274.68
-                temp_max: 281.83
-                pressure: 1022
-                humidity: 86
-              visibility: 10000
-              wind:
-                speed: 0.79
-                deg: 300
-                gust: 0.77
-              clouds:
-                all: 85
-              dt: 1643514653
-              sys:
-                type: 2
-                id: 2040223
-                country: US
-                sunrise: 1643470496
-                sunset: 1643505438
-              timezone: -28800
-              id: 5720727
-              name: Corvallis
-              cod: 200
+              examples:
+                response:
+                  value:
+                    coord:
+                      lon: -123.262
+                      lat: 44.5646
+                    weather:
+                      - id: 804
+                        main: Clouds
+                        description: overcast clouds
+                        icon: 04n
+                    base: stations
+                    main:
+                      temp: 276.68
+                      feels_like: 276.68
+                      temp_min: 274.68
+                      temp_max: 281.83
+                      pressure: 1022
+                      humidity: 86
+                    visibility: 10000
+                    wind:
+                      speed: 0.79
+                      deg: 300
+                      gust: 0.77
+                    clouds:
+                      all: 85
+                    dt: 1643514653
+                    sys:
+                      type: 2
+                      id: 2040223
+                      country: US
+                      sunrise: 1643470496
+                      sunset: 1643505438
+                    timezone: -28800
+                    id: 5720727
+                    name: Corvallis
+                    cod: 200
         "400":
-          description: "Invalid q/appid"
+          description: Invalid q/appid
   /hello:
     get:
       tags:
-      - "user"
-      summary: "Returns a random greeting"
+        - user
+      summary: Returns a random greeting
       description: ""
-      operationId: "getGreeting"
-      produces:
-      - "application/json"
-      parameters: []
+      operationId: getGreeting
+      security:
+        - bearerAuth: []
+      
       responses:
         "200":
-          description: "successful operation"
-          examples:
+          description: successful operation
+          content:
             application/json:
-              message: Good morning
-definitions:
-  User:
-    type: "object"
-    properties:
-      username:
-        type: "string"
-      password:
-        type: "string"
+              examples:
+                response:
+                  value:
+                    message: Good morning
 externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://3.83.49.190:3000/v1
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
