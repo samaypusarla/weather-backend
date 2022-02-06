@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: ""
+  description: "This swagger doc is for CS 561 weather API"
   version: "1.0.0"
   title: "CS 561 Assignment 4"
 host: "localhost:3000"
